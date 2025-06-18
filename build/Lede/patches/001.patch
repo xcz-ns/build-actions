@@ -1,0 +1,19 @@
+diff --git a/feeds/packages/lang/rust/Makefile b/feeds/packages/lang/rust/Makefile
+index 568f302..3a2a348 100644
+--- a/feeds/packages/lang/rust/Makefile
++++ b/feeds/packages/lang/rust/Makefile
+@@ -104,5 +104,14 @@ define Host/Install
+ 	)
+ endef
+ 
++define Host/Configure
++	echo '[llvm]' > $(HOST_BUILD_DIR)/config.toml
++	echo 'download-ci-llvm = false' >> $(HOST_BUILD_DIR)/config.toml
++	echo '[build]' >> $(HOST_BUILD_DIR)/config.toml
++	echo 'build = "$(RUSTC_HOST_ARCH)"' >> $(HOST_BUILD_DIR)/config.toml
++	echo 'host = ["$(RUSTC_HOST_ARCH)"]' >> $(HOST_BUILD_DIR)/config.toml
++	echo 'target = ["$(RUSTC_TARGET_ARCH)"]' >> $(HOST_BUILD_DIR)/config.toml
++endef
++
+ $(eval $(call HostBuild))
+ $(eval $(call BuildPackage,rust))
