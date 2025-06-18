@@ -99,7 +99,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 V=s
+        (unset CI && make -j$(nproc)) || (unset CI && make -j1 V=s)
 
     - name: 自动打包armsr_rootfs_tar_gz
       if: steps.compile.outcome == 'success' && env.ONLINE_FIRMWARE == 'true'
